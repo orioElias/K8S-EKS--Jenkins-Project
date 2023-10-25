@@ -15,7 +15,7 @@ pipeline {
 
         stage('Restore') {
             steps {
-                dotnet clean
+                sh 'dotnet clean'
                 sh 'dotnet restore RazorPagesApp/MyRazorPagesApp.csproj'
             }
         }
