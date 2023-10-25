@@ -12,6 +12,15 @@ pipeline {
             }
         }
 
+         stage('Install Dependencies') {
+            steps {
+                sh '''
+                    sudo apt-get update
+                    sudo apt-get install -y libicu-dev
+                '''
+            }
+        }
+
         stage('Build .NET Core App') {
             steps {
                 // Use the plugin's steps for .NET operations
