@@ -1,7 +1,8 @@
+using System;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace MyRazorPagesApp
+namespace MySimpleWebApp
 {
     public class Program
     {

@@ -1,22 +1,20 @@
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace MyRazorPagesApp
+namespace MySimpleWebApp
 {
     public class Startup
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages().AddRazorRuntimeCompilation();
         }
 
         public void Configure(IApplicationBuilder app)
         {
-            app.UseStaticFiles();
-            app.UseRouting();
-            app.UseEndpoints(endpoints =>
+            app.Run(async (context) =>
             {
-                endpoints.MapRazorPages();
+                await context.Response.WriteAsync("Hello World!");
             });
         }
     }
