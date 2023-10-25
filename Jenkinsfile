@@ -27,7 +27,7 @@ pipeline {
             steps {
                 // Use the plugin's steps for .NET operations
                 sh 'dotnet restore RazorPagesApp/MyRazorPagesApp.csproj'  
-                otnetBuild(configuration: 'Release')
+                dotnetBuild(configuration: 'Release')
             }
         }
 
