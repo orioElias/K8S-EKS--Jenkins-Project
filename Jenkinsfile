@@ -26,10 +26,11 @@ pipeline {
         stage('Build .NET Core App') {
             steps {
                 // Use the plugin's steps for .NET operations
-                dotnetRestore()
-                dotnetBuild(configuration: 'Release')
+                sh 'dotnet restore RazorPagesApp/MyRazorPagesApp.csproj'  
+                otnetBuild(configuration: 'Release')
             }
         }
+
 
         stage('Deploy to Devops Namespace') {
             steps {
