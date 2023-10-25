@@ -11,13 +11,22 @@ pipeline {
         stage('Install .NET Core SDK if needed') {
             steps {
                 script {
+                    
                     // Check if .NET Core SDK is already installed
                     def isDotnetInstalled = sh(script: 'which dotnet', returnStatus: true) == 0
                     if (!isDotnetInstalled) {
+                        
                         // Install .NET Core SDK (update this part based on your Linux distribution)
                         sh '''
+                            if [ -f /etc/os-release ]; then
+                                . /etc/os-release
+                                echo "Operating System: $NAME"
+                            elif [ -f /etc/issue ]; then
+                                echo "Operating System: $(head -1 /etc/issue)"
+                            else
+                                echo "Cannot determine the operating system."
+                            fi
                             ls
-                            help
                             lsb_release -a
                             sudo apt install -y wget
                             wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
