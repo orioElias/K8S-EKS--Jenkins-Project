@@ -20,8 +20,8 @@ pipeline {
          stage('Install Dependencies') {
             steps {
                 sh '''
-                    /usr/bin/sudo apt-get update
-                    /usr/bin/sudo apt-get install -y libicu-dev
+                    sudo apt-get update
+                    sudo apt-get install -y libicu-dev
                 '''
             }
         }
