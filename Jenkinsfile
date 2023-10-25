@@ -15,15 +15,15 @@ pipeline {
 
         stage('Restore') {
             steps {
-                sh 'dotnet clean RazorPagesApp/MyRazorPagesApp.csproj'
-                sh 'dotnet restore RazorPagesApp/MyRazorPagesApp.csproj'
+                sh 'dotnet clean MySimpleWebApp/mySimpleWebApp.csproj'
+                sh 'dotnet restore MySimpleWebApp/mySimpleWebApp.csproj'
             }
         }
 
 
         stage('Build') {
             steps {
-                dir('RazorPagesApp') {
+                dir('MySimpleWebApp') {
                     // Assuming dotnetBuild is a custom step or comes from a plugin you are using
                     dotnetBuild(configuration: 'Release')
                 }
