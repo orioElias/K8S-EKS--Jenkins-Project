@@ -13,6 +13,11 @@ pipeline {
             }
         }
 
+        environment {
+            // Add this line to disable globalization
+            SYSTEM_GLOBALIZATION_INVARIANT = 'true'
+        }
+
         stage('Restore') {
             steps {
                 sh 'dotnet clean MySimpleWebApp/mySimpleWebApp.csproj'
