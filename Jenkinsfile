@@ -11,8 +11,8 @@ pipeline {
         stage('Build .NET Core App') {
             steps {
                 sh '''
-                    dotnet restore
-                    dotnet build --configuration Release
+                    dotnetRestore
+                    dotnetBuild  --configuration Release
                 '''
             }
         }
