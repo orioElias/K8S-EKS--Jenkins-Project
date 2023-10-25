@@ -6,16 +6,16 @@ pipeline {
         dotnetsdk 'MyDotNetSDK'
     }
 
+    environment {
+        // Add this line to disable globalization
+        SYSTEM_GLOBALIZATION_INVARIANT = 'true'
+    }
+
     stages {
         stage('Checkout') {
             steps {
                 checkout scm
             }
-        }
-
-        environment {
-            // Add this line to disable globalization
-            SYSTEM_GLOBALIZATION_INVARIANT = 'true'
         }
 
         stage('Restore') {
@@ -24,7 +24,6 @@ pipeline {
                 sh 'dotnet restore MySimpleWebApp/mySimpleWebApp.csproj'
             }
         }
-
 
         stage('Build') {
             steps {
