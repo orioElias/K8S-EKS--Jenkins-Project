@@ -1,5 +1,10 @@
 pipeline {
     agent any
+
+    environment {
+        PATH = "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
+    }
+    
     tools {
         // Define the .NET SDK tool
         dotnetsdk 'MyDotNetSDK'
