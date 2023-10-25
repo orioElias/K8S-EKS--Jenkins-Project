@@ -13,24 +13,20 @@ pipeline {
             }
         }
 
-          stages {
-                stage('Restore') {
-                    steps {
-                        sh 'dotnet restore RazorPagesApp/MyRazorPagesApp.csproj'
-                    }
-                }
-        
-                stage('Build') {
-                    steps {
-                        dir('RazorPagesApp') {
-                            // Assuming dotnetBuild is a custom step or comes from a plugin you are using
-                            dotnetBuild(configuration: 'Release')
-                        }
-                    }
-                }
+        stage('Restore') {
+            steps {
+                sh 'dotnet restore RazorPagesApp/MyRazorPagesApp.csproj'
             }
         }
 
+        stage('Build') {
+            steps {
+                dir('RazorPagesApp') {
+                    // Assuming dotnetBuild is a custom step or comes from a plugin you are using
+                    dotnetBuild(configuration: 'Release')
+                }
+            }
+        }
 
         stage('Deploy to Devops Namespace') {
             steps {
