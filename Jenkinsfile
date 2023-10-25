@@ -11,30 +11,16 @@ pipeline {
         stage('Install .NET Core SDK if needed') {
             steps {
                 script {
-                    
                     // Check if .NET Core SDK is already installed
                     def isDotnetInstalled = sh(script: 'which dotnet', returnStatus: true) == 0
                     if (!isDotnetInstalled) {
-                        
-                        // Install .NET Core SDK (update this part based on your Linux distribution)
                         sh '''
-                            if [ -f /etc/os-release ]; then
-                                . /etc/os-release
-                                echo "Operating System: $NAME"
-                            elif [ -f /etc/issue ]; then
-                                echo "Operating System: $(head -1 /etc/issue)"
-                            else
-                                echo "Cannot determine the operating system."
-                            fi
-                            ls
-                            lsb_release -a
-                            sudo apt install -y wget
-                            wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+                            apt-get update
+                            apt-get install -y wget apt-transport-https
+                            wget -q https://packages.microsoft.com/config/debian/12/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
                             dpkg -i packages-microsoft-prod.deb
-                            sudo apt update
-                            sudo apt install -y apt-transport-https
-                            sudo apt update
-                            sudo apt install -y dotnet-sdk-3.1
+                            apt-get update
+                            apt-get install -y dotnet-sdk-3.1
                         '''
                     }
                 }
@@ -44,7 +30,6 @@ pipeline {
         stage('Build .NET Core App') {
             steps {
                 sh '''
-                    # Assuming you have the .NET SDK installed in your Jenkins agent
                     dotnet restore
                     dotnet build --configuration Release
                 '''
@@ -54,7 +39,6 @@ pipeline {
         stage('Deploy to Devops Namespace') {
             steps {
                 sh '''
-                    # Apply the Kubernetes configurations
                     kubectl apply -f deployment-devops.yaml --namespace=devops
                 '''
             }
@@ -63,8 +47,9 @@ pipeline {
         stage('Deploy to Deploy Namespace') {
             steps {
                 sh '''
-                    # Apply the Kubernetes configurations
-                    kubectl create namespace deploy
+                    if ! kubectl get namespaces | grep -q 'deploy'; then
+                        kubectl create namespace deploy
+                    fi
                     kubectl apply -f deployment-deploy.yaml --namespace=deploy
                 '''
             }
