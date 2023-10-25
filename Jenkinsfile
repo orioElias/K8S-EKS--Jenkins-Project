@@ -16,13 +16,13 @@ pipeline {
                     if (!isDotnetInstalled) {
                         // Install .NET Core SDK (update this part based on your Linux distribution)
                         sh '''
-                            apt-get install -y wget
+                            sudo apt install -y wget
                             wget -q https://packages.microsoft.com/config/ubuntu/20.04/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
                             dpkg -i packages-microsoft-prod.deb
-                            apt-get update
-                            apt-get install -y apt-transport-https
-                            apt-get update
-                            apt-get install -y dotnet-sdk-3.1
+                            sudo apt update
+                            sudo apt install -y apt-transport-https
+                            sudo apt update
+                            sudo apt install -y dotnet-sdk-3.1
                         '''
                     }
                 }
