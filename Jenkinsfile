@@ -13,21 +13,21 @@ pipeline {
             }
         }
 
-         stage('Install Dependencies') {
-            steps {
-                sh '''
-                    sudo apt-get update
-                    sudo apt-get install -y libicu-dev
-                '''
-            }
-        }
-
-
-        stage('Build .NET Core App') {
-            steps {
-                // Use the plugin's steps for .NET operations
-                sh 'dotnet restore RazorPagesApp/MyRazorPagesApp.csproj'  
-                dotnetBuild(configuration: 'Release')
+          stages {
+                stage('Restore') {
+                    steps {
+                        sh 'dotnet restore RazorPagesApp/MyRazorPagesApp.csproj'
+                    }
+                }
+        
+                stage('Build') {
+                    steps {
+                        dir('RazorPagesApp') {
+                            // Assuming dotnetBuild is a custom step or comes from a plugin you are using
+                            dotnetBuild(configuration: 'Release')
+                        }
+                    }
+                }
             }
         }
 
