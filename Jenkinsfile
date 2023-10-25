@@ -4,7 +4,7 @@ pipeline {
     environment {
         PATH = "/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:$PATH"
     }
-    
+
     tools {
         // Define the .NET SDK tool
         dotnetsdk 'MyDotNetSDK'
@@ -20,11 +20,14 @@ pipeline {
          stage('Install Dependencies') {
             steps {
                 sh '''
+                    echo $PATH
+                    which sudo
                     sudo apt-get update
                     sudo apt-get install -y libicu-dev
                 '''
             }
         }
+
 
         stage('Build .NET Core App') {
             steps {
