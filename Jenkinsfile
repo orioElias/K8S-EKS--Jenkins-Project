@@ -15,10 +15,11 @@ pipeline {
 
         stage('Restore') {
             steps {
-                sh 'dotnet clean'
+                sh 'dotnet clean RazorPagesApp/MyRazorPagesApp.csproj'
                 sh 'dotnet restore RazorPagesApp/MyRazorPagesApp.csproj'
             }
         }
+
 
         stage('Build') {
             steps {
