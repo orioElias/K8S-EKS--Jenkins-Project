@@ -1,5 +1,9 @@
 pipeline {
-    agent any 
+    agent any
+    tools {
+        // Define the .NET SDK tool
+        dotnetsdk 'MyDotNetSDK'
+    }
 
     stages {
         stage('Checkout') {
@@ -7,13 +11,12 @@ pipeline {
                 checkout scm
             }
         }
-        
+
         stage('Build .NET Core App') {
             steps {
-                sh '''
-                    dotnetRestore
-                    dotnetBuild  --configuration Release
-                '''
+                // Use the plugin's steps for .NET operations
+                dotnetRestore()
+                dotnetBuild(configuration: 'Release')
             }
         }
 
