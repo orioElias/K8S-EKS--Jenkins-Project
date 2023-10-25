@@ -7,7 +7,7 @@ namespace MyRazorPagesApp
     {
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddRazorPages();
+            services.AddRazorPages().AddRazorRuntimeCompilation();
         }
 
         public void Configure(IApplicationBuilder app)
