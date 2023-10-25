@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dotnetcore-devops
+  namespace: devops
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dotnetcore-devops
+  template:
+    metadata:
+      labels:
+        app: dotnetcore-devops
+    spec:
+      containers:
+      - name: dotnetcore-devops
+        image: mcr.microsoft.com/dotnet/core/samples:aspnetapp
+        ports:
+        - containerPort: 80
