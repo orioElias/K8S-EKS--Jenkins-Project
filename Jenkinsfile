@@ -18,20 +18,21 @@ pipeline {
             }
         }
 
-        stage('Restore') {
-            steps {
-                sh 'dotnet clean MySimpleWebApp/mySimpleWebApp.csproj'
-                sh 'dotnet restore MySimpleWebApp/mySimpleWebApp.csproj'
-            }
-        }
+        // stage('Restore') {
+        //     steps {
+        //         sh 'dotnet clean MySimpleWebApp/mySimpleWebApp.csproj'
+        //         sh 'dotnet restore MySimpleWebApp/mySimpleWebApp.csproj'
+        //     }
+        // }
 
-        stage('Build') {
-            steps {
-                dir('MySimpleWebApp') {
-                    sh 'dotnet build --configuration Release'
-                }
-            }
-        }
+        // stage('Build') {
+        //     steps {
+        //         dir('MySimpleWebApp') {
+        //             // Assuming dotnetBuild is a custom step or comes from a plugin you are using
+        //             dotnetBuild(configuration: 'Release')
+        //         }
+        //     }
+        // }
         
         stage('Docker Build') {
             steps {
@@ -46,6 +47,14 @@ pipeline {
                 sh '''
                     docker tag my-dotnet-app:latest orielias/my-dotnet-app:latest
                     docker push orielias/my-dotnet-app:latest
+                '''
+            }
+        }
+
+        stage('Deploy to Devops Namespace') {
+            steps {
+                sh '''
+                    kubectl apply -f deployment-devops.yaml --namespace=devops
                 '''
             }
         }
