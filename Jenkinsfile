@@ -34,11 +34,11 @@ pipeline {
         //     }
         // }
         
-        stage('Docker Build') {
+        stage('Build Docker Image') {
             steps {
-                sh '''
-                     docker build -t my-dotnet-app:latest ./MySimpleWebApp
-                '''
+                script {
+                    docker.build("my-dotnet-app:latest", "./MySimpleWebApp")
+                }
             }
         }
 
