@@ -36,7 +36,7 @@ pipeline {
         
         stage('Docker Build') {
             steps {
-                h '''
+                sh '''
                     docker build -t my-dotnet-app:latest ./MySimpleWebApp
                 '''
             }
