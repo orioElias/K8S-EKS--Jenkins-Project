@@ -17,7 +17,8 @@ pipeline {
                 checkout scm
             }
         }
-
+        
+        
         // stage('Restore') {
         //     steps {
         //         sh 'dotnet clean MySimpleWebApp/mySimpleWebApp.csproj'
@@ -36,9 +37,9 @@ pipeline {
         
         stage('Docker Build') {
             steps {
-                sh '''
+                script {
                     docker.build("my-dotnet-app:latest", "./MySimpleWebApp")
-                '''
+                }
             }
         }
 
