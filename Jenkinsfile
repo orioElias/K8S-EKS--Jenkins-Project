@@ -37,8 +37,8 @@ pipeline {
         stage('Docker Build') {
             steps {
                 sh '''
-                    sudo chmod 666 /var/run/docker.sock
-                    sudo docker build -t my-dotnet-app:latest ./MySimpleWebApp
+                     chmod 666 /var/run/docker.sock
+                     docker build -t my-dotnet-app:latest ./MySimpleWebApp
                 '''
             }
         }
