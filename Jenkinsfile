@@ -37,12 +37,11 @@ pipeline {
         
         stage('Docker Build') {
             steps {
-                sh '''
-                    docker build -t my-dotnet-app:latest ./MySimpleWebApp
-                '''
-    }
-}
-
+                script {
+                    dockerPipeline.docker.build("my-dotnet-app:latest", "./MySimpleWebApp")
+                }
+            }
+        }
 
         stage('Docker Push') {
             steps {
