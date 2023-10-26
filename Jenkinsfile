@@ -18,19 +18,36 @@ pipeline {
             }
         }
 
-        stage('Restore') {
+        // stage('Restore') {
+        //     steps {
+        //         sh 'dotnet clean MySimpleWebApp/mySimpleWebApp.csproj'
+        //         sh 'dotnet restore MySimpleWebApp/mySimpleWebApp.csproj'
+        //     }
+        // }
+
+        // stage('Build') {
+        //     steps {
+        //         dir('MySimpleWebApp') {
+        //             // Assuming dotnetBuild is a custom step or comes from a plugin you are using
+        //             dotnetBuild(configuration: 'Release')
+        //         }
+        //     }
+        // }
+        
+        stage('Docker Build') {
             steps {
-                sh 'dotnet clean MySimpleWebApp/mySimpleWebApp.csproj'
-                sh 'dotnet restore MySimpleWebApp/mySimpleWebApp.csproj'
+                h '''
+                    docker build -t my-dotnet-app:latest ./MySimpleWebApp
+                '''
             }
         }
 
-        stage('Build') {
+        stage('Docker Push') {
             steps {
-                dir('MySimpleWebApp') {
-                    // Assuming dotnetBuild is a custom step or comes from a plugin you are using
-                    dotnetBuild(configuration: 'Release')
-                }
+                sh '''
+                    docker tag my-dotnet-app:latest orielias/my-dotnet-app:latest
+                    docker push orielias/my-dotnet-app:latest
+                '''
             }
         }
 
