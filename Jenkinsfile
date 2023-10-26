@@ -28,8 +28,7 @@ pipeline {
         stage('Build') {
             steps {
                 dir('MySimpleWebApp') {
-                    // Assuming dotnetBuild is a custom step or comes from a plugin you are using
-                    dotnetBuild(configuration: 'Release')
+                    sh 'dotnet build --configuration Release'
                 }
             }
         }
@@ -50,14 +49,6 @@ pipeline {
                 '''
             }
         }
-
-        // stage('Deploy to Devops Namespace') {
-        //     steps {
-        //         sh '''
-        //             kubectl apply -f deployment-devops.yaml --namespace=devops
-        //         '''
-        //     }
-        // }
 
         stage('Deploy to Deploy Namespace') {
             steps {
