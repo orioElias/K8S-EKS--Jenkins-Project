@@ -1,27 +1,24 @@
 Kubernetes Cluster with Jenkins Deployment
 
-Overview
+Overview :
 This project aims to create a Kubernetes cluster and deploy Jenkins on it using Amazon Elastic Kubernetes Service (EKS).
 
-Prerequisites
+Prerequisites :
 An active AWS account
 Configured EC2 instance with Ubuntu AMI and specific security group settings
 
-Key Features
+Key Features :
 Easy-to-follow steps for cluster creation
 Secure and flexible Jenkins deployment
 Automated processes for better scalability
 
-Technology Stack
+Technology Stack :
 AWS EKS
 AWS EC2
 Jenkins
 
-Architecture
+Architecture :
 The architecture involves an EC2 control node, configured security groups, and an EKS cluster where Jenkins will be deployed.
 
-Documentation
+Documentation :
 Detailed documentation is available that outlines the step-by-step process for setting up the Kubernetes cluster and Jenkins deployment.
-
-Link To GitHub Repository
-https://github.com/orioElias/K8S-Project
