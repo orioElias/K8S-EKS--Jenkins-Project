@@ -9,7 +9,7 @@ COPY MySimpleWebApp/. .
 RUN dotnet publish -c release -o /app
 
 # Use the runtime image to run the app
-FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS runtime
+FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
 WORKDIR /app
 COPY --from=build /app .
 ENTRYPOINT ["dotnet", "MySimpleWebApp.dll"]
