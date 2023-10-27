@@ -1,16 +1,6 @@
 pipeline {
     agent any
 
-    tools {
-        // Define the .NET SDK tool
-        dotnetsdk 'MyDotNetSDK'
-    }
-
-    environment {
-        // Add this line to disable globalization
-        SYSTEM_GLOBALIZATION_INVARIANT = 'true'
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -21,7 +11,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 sh '''
-                    docker build -t my-dotnet-app:latest ./MySimpleWebApp
+                    docker build -t my-dotnet-app:latest .
                 '''
             }
         }
@@ -35,15 +25,21 @@ pipeline {
             }
         }
 
-        stage('Deploy to Deploy Namespace') {
+        stage('Deploy to web-app Namespace') {
             steps {
                 sh '''
-                    if ! kubectl get namespaces | grep -q 'deploy'; then
-                        kubectl create namespace deploy
+                    if ! kubectl get namespaces | grep -q 'web-app'; then
+                        kubectl create namespace web-app
                     fi
-                    kubectl apply -f deployment-deploy.yaml --namespace=deploy
+                    kubectl apply -f deployment-web-app.yaml --namespace=web-app
                 '''
             }
+        }
+    }
+
+    post {
+        always {
+            cleanWs()
         }
     }
 }
