@@ -19,7 +19,7 @@ pipeline {
        stage('Docker Push') {
             steps {
                 script {
-                    withDockerRegistry([credentialsId: 'Docker-Hub-Credentials', url: '']) {
+                    withDockerRegistry([credentialsId: 'docker-hub-token', url: '']) {
                         sh '''
                             docker tag my-dotnet-app:latest orielias/my-dotnet-app:latest
                             docker push orielias/my-dotnet-app:latest
