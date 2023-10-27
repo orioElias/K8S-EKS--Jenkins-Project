@@ -1,8 +1,8 @@
 # Use the SDK image to build the app
-FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build
+WORKDIR /source
 
 # Restore and publish the app
-WORKDIR /source
 COPY MySimpleWebApp/. .
 RUN dotnet restore
 RUN dotnet publish -c release -o /app
