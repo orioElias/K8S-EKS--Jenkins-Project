@@ -37,6 +37,7 @@ pipeline {
                         kubectl create namespace web-app
                     fi
                     kubectl apply -f deployment-web-app.yaml --namespace=web-app
+                    kubectl apply -f dotnetcore-service.yaml --namespace=web-app
                 '''
             }
         }
