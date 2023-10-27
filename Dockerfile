@@ -11,4 +11,4 @@ RUN dotnet publish -c release -o /app
 FROM mcr.microsoft.com/dotnet/aspnet:6.0 AS runtime
 WORKDIR /app
 COPY --from=build /app .
-ENTRYPOINT ["dotnet", "MySimpleWebApp.dll"]
+ENTRYPOINT ["dotnet", "mySimpleWebApp.dll"]
