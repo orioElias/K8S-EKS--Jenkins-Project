@@ -16,12 +16,16 @@ pipeline {
             }
         }
 
-        stage('Docker Push') {
+       stage('Docker Push') {
             steps {
-                sh '''
-                    docker tag my-dotnet-app:latest orielias/my-dotnet-app:latest
-                    docker push orielias/my-dotnet-app:latest
-                '''
+                script {
+                    withDockerRegistry([credentialsId: 'Docker-Hub-Credentials', url: '']) {
+                        sh '''
+                            docker tag my-dotnet-app:latest orielias/my-dotnet-app:latest
+                            docker push orielias/my-dotnet-app:latest
+                        '''
+                    }
+                }
             }
         }
 
