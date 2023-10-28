@@ -11,7 +11,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 sh '''
-                    docker build -t my-dotnet-app:latest .
+                    docker build -t my-dotnet-app:latest Docker/
                 '''
             }
         }
@@ -36,8 +36,7 @@ pipeline {
                     if ! kubectl get namespaces | grep -q 'web-app'; then
                         kubectl create namespace web-app
                     fi
-                    kubectl apply -f deployment-web-app.yaml --namespace=web-app
-                    kubectl apply -f dotnetcore-web-app.yaml --namespace=web-app
+                    kubectl apply -f K8S/ --namespace=web-app
                 '''
             }
         }
