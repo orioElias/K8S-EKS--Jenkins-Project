@@ -8,11 +8,11 @@ pipeline {
             }
         }
 
-       stage('Docker Build') {
+        stage('Docker Build') {
             steps {
-                dir('Docker') {
-                    sh 'docker build -t my-dotnet-app:latest .'
-                }
+                sh '''
+                    docker build -t my-dotnet-app:latest Docker
+                '''
             }
         }
 
