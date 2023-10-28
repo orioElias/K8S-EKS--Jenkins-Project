@@ -18,45 +18,69 @@ Ports to Open:
 ![ec2 instance(secGroup)](Images/ec2_instance(secGroup).png)
 
 SSH into EC2 Instance
+
 ssh -i "your-key.pem" ubuntu@<EC2_PUBLIC_IP>
 
 Change Host Name(Optional for comfort)
+
 sudo hostnamectl set-hostname k8s-master
+
 echo "127.0.0.1 k8s-master" | sudo tee -a /etc/hosts
+
 (close the current SSH session and open a new one. 
 The changes should take effect)
 
 Update Packages
+
 sudo apt-get update
 
 Install AWS CLI
+
 sudo apt install awscli -y
 
 Install python3-pip
+
 sudo apt install python3-pip
+
 pip install --upgrade awscli
 
 Configure AWS CLI
+
 Run the “aws configure” command(Here you'll be prompted to enter details such as):
+
 AWS Access Key ID: Your AWS Access Key.
+
 AWS Secret Access Key: Your AWS Secret Access Key.
+
 Default region name: The region where you want to create the EKS cluster. 
+
 Default output format: You can leave this as ‘None’
 
+
 Install EKSCTL
+
 curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
+
 sudo mv /tmp/eksctl /usr/local/bin
 
 *verify the installation
+
 eksctl version
 
 Install Kubectl
+
 sudo apt-get update
+
 sudo apt-get install -y apt-transport-https
+
 sudo curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+
 echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
+
 sudo apt-get update
+
 sudo apt-get install -y kubectl
+
 
 Create an EKS Cluster
 eksctl create cluster \
@@ -74,6 +98,7 @@ eksctl get cluster --name ‘cluster-name --region “your region”
 ![Checking Cluster](Images/Checking_Cluster.png)
 
 Verify that kubectl is properly communicating with your new cluster
+
 kubectl version 
 ![Checking kubectl](Images/Checking_kubectl.png)
 
