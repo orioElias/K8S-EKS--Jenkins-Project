@@ -11,7 +11,7 @@ pipeline {
         stage('Docker Build') {
             steps {
                 sh '''
-                    docker build -t my-dotnet-app:latest Docker
+                    docker build -t my-dotnet-app:latest Docker 
                 '''
             }
         }
