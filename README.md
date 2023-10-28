@@ -78,7 +78,7 @@ Allocating An Elastic IP
 Navigate to EC2 -> Elastic IP’s->Allocate Elastic IP Address -> Allocate ->
 Choose the New IP, Actions, Associate elastic ip address ->Choose “Network Interface”, The Instance Network Interface, His Private IP-> Associate
 ![Elastic ip(1)](Images/Elastic ip(1).png)
-![Elastic ip(2)](Images/Elastic ip(2).png
+![Elastic ip(2)](Images/Elastic ip(2).png)
 ![Elastic ip(3)](Images/Elastic ip(3).png)
 ![Elastic ip(4)](Images/Elastic ip(4).png)
 
