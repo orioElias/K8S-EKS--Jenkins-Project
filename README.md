@@ -1,18 +1,19 @@
 # Create a Kubernetes Cluster And Deploy Jenkins Using Elastic Kubernetes Service (EKS)
 
 ## Table of Contents
-1. EC2 Control Node Setup
-2. SSH into EC2 Instance
-3. Install Necessary Tools
-4. Create an EKS Cluster
-5. Configure Jenkins
-6. Integrate with GitHub
-7. Docker Configuration
-8. Final Steps
+1. [EC2 Control Node Setup](#ec2-control-node-setup)
+2. [SSH into EC2 Instance](#ssh-into-ec2-instance)
+3. [Install Necessary Tools](#install-necessary-tools)
+4. [Create an EKS Cluster](#create-an-eks-cluster)
+5. [Configure Jenkins](#configure-jenkins)
+6. [Integrate with GitHub](#integrate-with-github)
+7. [Docker Configuration](#docker-configuration)
+8. [Final Steps](#final-steps)
 
 ---
 
 ### EC2 Control Node Setup
+[Back to top](#table-of-contents)
 
 **Instance Type**: t3.small  
 **AMI**: Ubuntu.
@@ -29,53 +30,31 @@ Ports to Open:
 ---
 
 ### SSH into EC2 Instance
+[Back to top](#table-of-contents)
 
-\`\`\`bash
-
-ssh -i "your-key.pem" ubuntu@<EC2_PUBLIC_IP>
-
-\`\`\`
+`ssh -i "your-key.pem" ubuntu@<EC2_PUBLIC_IP>`
 
 #### Change Host Name (Optional)
-\`\`\`bash
-
-sudo hostnamectl set-hostname k8s-master
-echo "127.0.0.1 k8s-master" | sudo tee -a /etc/hosts
-
-\`\`\`
+`sudo hostnamectl set-hostname k8s-master`
+`echo "127.0.0.1 k8s-master" | sudo tee -a /etc/hosts`
 
 ---
 
 ### Install Necessary Tools
+[Back to top](#table-of-contents)
 
 #### Update Packages
-\`\`\`bash
-
-sudo apt-get update
-
-\`\`\`
+`sudo apt-get update`
 
 #### Install AWS CLI
-\`\`\`bash
-
-sudo apt install awscli -y
-
-\`\`\`
+`sudo apt install awscli -y`
 
 #### Install python3-pip
-\`\`\`bash
-
-sudo apt install python3-pip
-pip install --upgrade awscli
-
-\`\`\`
+`sudo apt install python3-pip`
+`pip install --upgrade awscli`
 
 #### Configure AWS CLI
-\`\`\`bash
-
-aws configure
-
-\`\`\`
+`aws configure`
 
 - AWS Access Key ID: Your AWS Access Key.
 - AWS Secret Access Key: Your AWS Secret Access Key.
@@ -84,58 +63,26 @@ aws configure
 
 ---
 
-### Install EKSCTL and Kubectl
-\`\`\`bash
-
-curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
-sudo mv /tmp/eksctl /usr/local/bin
-eksctl version
-
-\`\`\`
-
-#### Install Kubectl
-\`\`\`bash
-
-sudo apt-get update
-sudo apt-get install -y apt-transport-https
-sudo curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
-echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
-sudo apt-get update
-sudo apt-get install -y kubectl
-
-\`\`\`
-
----
-
 ### Create an EKS Cluster
-\`\`\`bash
+[Back to top](#table-of-contents)
 
-eksctl create cluster \
---name “cluster-name” \
---region “your-region” \
---nodes 1 \
---nodegroup-name “group-name” \
---node-type “instance-type” \
---managed
-
-\`\`\`
+`eksctl create cluster --name “cluster-name” --region “your-region” --nodes 1 --nodegroup-name “group-name” --node-type “instance-type” --managed`
 
 ![Cluster Creation](Images/Cluster_Creation.png)
 
 ---
 
 ### Confirm Cluster Creation and Setup
-\`\`\`bash
+[Back to top](#table-of-contents)
 
-eksctl get cluster --name ‘cluster-name --region “your region”
-kubectl version
-kubectl create namespace devops
-
-\`\`\`
+`eksctl get cluster --name ‘cluster-name --region “your region”`
+`kubectl version`
+`kubectl create namespace devops`
 
 ---
 
 ### Allocating An Elastic IP
+[Back to top](#table-of-contents)
 ![Elastic ip(1)](Images/Elastic_ip(1).png)
 ![Elastic ip(2)](Images/Elastic_ip(2).png)
 ![Elastic ip(3)](Images/Elastic_ip(3).png)
@@ -144,29 +91,23 @@ kubectl create namespace devops
 ---
 
 ### Configure Jenkins
+[Back to top](#table-of-contents)
 ![Jenkins Dockerfile](Images/Jenkins_Dockerfile.png)
 ![Jenkins Deployment YAML File](Images/Jenkins_Deployment_YAML_File.png)
 
-\`\`\`bash
-
-kubectl apply -f persistent-volume.yaml
-kubectl apply -f persistent-volume-claim.yaml
-kubectl apply -f local-storage.yaml
-
-\`\`\`
+`kubectl apply -f persistent-volume.yaml`
+`kubectl apply -f persistent-volume-claim.yaml`
+`kubectl apply -f local-storage.yaml`
 
 #### Expose Jenkins Service
-\`\`\`bash
-
-kubectl apply -f jenkins-service.yaml
-
-\`\`\`
+`kubectl apply -f jenkins-service.yaml`
 
 ![Expose the Jenkins Service](Images/Expose_the_Jenkins_Service.png)
 
 ---
 
 ### Integrate with GitHub
+[Back to top](#table-of-contents)
 ![Create GitHub Account](Images/Create_GitHub_Account.png)
 ![Create a GitHub Repository (1)](Images/Create_a_GitHub_Repository_(1).png)
 
@@ -177,17 +118,15 @@ kubectl apply -f jenkins-service.yaml
 ---
 
 ### Docker Configuration
+[Back to top](#table-of-contents)
 ![Creating Docker Hub credentials](Images/Creating_Docker_Hub_credentials.png)
 
 ---
 
 ### Final Steps
+[Back to top](#table-of-contents)
 ![See the pipeline runs](Images/See_the_pipeline_runs.png)
 
-\`\`\`bash
-
-kubectl apply -f jenkins-cluster-role-binding.yaml
-kubectl apply -f jenkins-cluster-role.yaml
-
-\`\`\`
+`kubectl apply -f jenkins-cluster-role-binding.yaml`
+`kubectl apply -f jenkins-cluster-role.yaml`
 
