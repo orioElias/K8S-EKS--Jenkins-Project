@@ -1,5 +1,18 @@
 # Create a Kubernetes Cluster And Deploy Jenkins, Using Elastic Kubernetes Service(EKS)
 
+## Table of Contents
+1. [EC2 Control Node and SSH](#ec2-control-node-and-ssh)
+2. [AWS CLI and EKSCTL Installation](#aws-cli-and-eksctl-installation)
+3. [EKS Cluster Creation](#eks-cluster-creation)
+4. [Jenkins Setup](#jenkins-setup)
+5. [Persistent Volumes and Services](#persistent-volumes-and-services)
+6. [Webhook and Port Configurations](#webhook-and-port-configurations)
+7. [GitHub and Jenkins Integration](#github-and-jenkins-integration)
+8. [Docker Setup](#docker-setup)
+9. [Deployment Configuration](#deployment-configuration)
+10. [Roles and Pipeline Run](#roles-and-pipeline-run)
+
+
 ## EC2 Control Node
 
 **Instance Type**: t3.small  
