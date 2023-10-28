@@ -21,14 +21,18 @@
 ## SSH into EC2 Instance
 
 \`\`\`bash
+
 ssh -i "your-key.pem" ubuntu@<EC2_PUBLIC_IP>
+
 \`\`\`
 
 ### Change Host Name (Optional for comfort)
 
 \`\`\`bash
+
 sudo hostnamectl set-hostname k8s-master
 echo "127.0.0.1 k8s-master" | sudo tee -a /etc/hosts
+
 \`\`\`
 
 (Close the current SSH session and open a new one. The changes should take effect)
@@ -38,7 +42,9 @@ echo "127.0.0.1 k8s-master" | sudo tee -a /etc/hosts
 ## Update Packages
 
 \`\`\`bash
+
 sudo apt-get update
+
 \`\`\`
 
 ---
@@ -46,7 +52,9 @@ sudo apt-get update
 ## Install AWS CLI
 
 \`\`\`bash
+
 sudo apt install awscli -y
+
 \`\`\`
 
 ---
@@ -54,11 +62,15 @@ sudo apt install awscli -y
 ## Install python3-pip
 
 \`\`\`bash
+
 sudo apt install python3-pip
+
 \`\`\`
 
 \`\`\`bash
+
 pip install --upgrade awscli
+
 \`\`\`
 
 ---
@@ -77,8 +89,10 @@ Run the “aws configure” command (Here you'll be prompted to enter details su
 ## Install EKSCTL
 
 \`\`\`bash
+
 curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
 sudo mv /tmp/eksctl /usr/local/bin
+
 \`\`\`
 
 **Verify the installation**
@@ -92,12 +106,14 @@ eksctl version
 ## Install Kubectl
 
 \`\`\`bash
+
 sudo apt-get update
 sudo apt-get install -y apt-transport-https
 sudo curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
 echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
 sudo apt-get update
 sudo apt-get install -y kubectl
+
 \`\`\`
 
 ---
@@ -105,6 +121,7 @@ sudo apt-get install -y kubectl
 ## Create an EKS Cluster
 
 \`\`\`bash
+
 eksctl create cluster \\
 --name “cluster-name” \\
 --region “your-region” \\
@@ -112,6 +129,7 @@ eksctl create cluster \\
 --nodegroup-name “group-name” \\
 --node-type “instance-type” (e.g. t2/t3.medium) \\
 --managed (simplifies node management.)
+
 \`\`\`
 
 ![Cluster Creation](Images/Cluster_Creation.png)
@@ -123,7 +141,9 @@ The output should be EKS cluster "cluster-name" in "region name" region is ready
 ## Confirm the cluster creation
 
 \`\`\`bash
+
 eksctl get cluster --name ‘cluster-name --region “your region”
+
 \`\`\`
 
 ![Checking Cluster](Images/Checking_Cluster.png)
@@ -133,7 +153,9 @@ eksctl get cluster --name ‘cluster-name --region “your region”
 ## Verify that kubectl is properly communicating with your new cluster
 
 \`\`\`bash
+
 kubectl version
+
 \`\`\`
 
 ![Checking kubectl](Images/Checking_kubectl.png)
@@ -143,7 +165,9 @@ kubectl version
 ## Create ‘devops’ namespace
 
 \`\`\`bash
+
 kubectl create namespace devops
+
 \`\`\`
 
 ---
@@ -171,9 +195,11 @@ Choose the New IP, Actions, Associate elastic ip address ->Choose “Network Int
 Navigate to the directory where the Dockerfile is located, then build the Docker image:
 
 \`\`\`bash
+
 docker build -t <jenkins-image> .
 docker tag  <jenkins-image> <username>/<repo-name:<tag>
 docker push <username>/<repo-name:<tag>
+
 \`\`\`
 
 ![Jenkins Dockerfile Build](Images/Jenkins_Dockerfile_Build.png)
@@ -187,7 +213,9 @@ Change values : to your “node name”
 ![persistent volume YAML File](Images/persistent_volume_YAML_File.png)
 
 \`\`\`bash
+
 kubectl apply -f persistent-volume.yaml
+
 \`\`\`
 
 ---
@@ -197,7 +225,9 @@ kubectl apply -f persistent-volume.yaml
 ![Jenkins persistent volume claim YAML File](Images/Jenkins_persistent_volume_claim_YAML_File.png)
 
 \`\`\`bash
+
 kubectl apply -f persistent-volume-claim.yaml
+
 \`\`\`
 
 ---
@@ -207,7 +237,9 @@ kubectl apply -f persistent-volume-claim.yaml
 ![persistent local-storage YAML File](Images/persistent_local-storage_YAML_File.png)
 
 \`\`\`bash
+
 kubectl apply -f local-storage.yaml
+
 \`\`\`
 
 ---
@@ -240,7 +272,9 @@ The output should be : “service/jenkins created”
 ## Apply the Deployment
 
 \`\`\`bash
+
 kubectl apply -f jenkins-deployment.yaml
+
 \`\`\`
 
 The output should be : “deployment.apps/jenkins created”
@@ -254,9 +288,11 @@ The output should be : “deployment.apps/jenkins created”
 ---
 
 \`\`\`bash
+
 sh-4.2$ /bin/bash
 [ssm-user@ip-192-168-39-114 bin]$ sudo mkdir -p /var/jenkins-data
 sudo chmod -R 777 /var/jenkins-data
+
 \`\`\`
 
 ## Allow Traffic on Port 30000
@@ -270,7 +306,9 @@ Add rule (custom TCP, Port Range - 30000, CIDR - 0.0.0.0/0) -> Save rules
 ## Access the Jenkins Website (nodeIP:NodePort)
 
 \`\`\`bash
+
 kubectl get nodes -o wide
+
 \`\`\`
 
 copy the EXTERNAL-IP
@@ -282,7 +320,9 @@ now reach the jenkins website through : EXTERNAL-IP:30000
 ## Retrieve Jenkins Unlock Key
 
 \`\`\`bash
+
 kubectl exec -it $(kubectl get pod -n devops -l app=jenkins -o jsonpath="{.items[0].metadata.name}") -n devops -- cat /var/jenkins_home/secrets/initialAdminPassword
+
 \`\`\`
 
 ![Retrieve Jenkins Unlock Key](Images/Retrieve_Jenkins_Unlock_Key.png)
@@ -449,7 +489,9 @@ Navigate to: EC2 -> Instances -> Click on Instance ID (worker node) ->   Securit
 run in the terminal (in the directory that you want to clone your repo)
 
 \`\`\`bash
+
 git clone https://github.com/<your-username>/<directory-name>.git
+
 \`\`\`
 
 this will create a new directory that contains your GitHub repository.
@@ -457,18 +499,22 @@ this will create a new directory that contains your GitHub repository.
 ![Clone the repository to your local machine && Checking the Webhook](Images/Clone_the_repository_to_your_local_machine&&Checking_the_Webhook.png)
 
 \`\`\`bash
+
 cd <directory-name>
 Make some changes to the existing files or add new files to the directory.
 git add <filename>
 git commit -m "Your commit message here"
 git config --global credential.helper 'cache --timeout=3600' (optional) 
+
 \`\`\`
 
 \`\`\`bash
+
 git push origin main
 username: <your-username>
 password: <Personal Access Token>
 After you push the commit, your GitHub webhook should trigger your Jenkins pipeline if it's configured correctly.
+
 \`\`\`
 
 ## Download an ASP.NET Core web application.
@@ -502,13 +548,17 @@ Launch a new t2.micro EC2 instance with Ubuntu AMI
 SSH into Docker-Host
 
 \`\`\`bash
+
 sudo apt-get update && sudo apt-get upgrade -y
+
 \`\`\`
 
 ## Install Docker
 \`\`\`bash
+
 curl -fsSL https://get.docker.com -o get-docker.sh
 sudo sh get-docker.sh
+
 \`\`\`
 
 Configure Docker Daemon :
@@ -525,16 +575,20 @@ save.
 Edit the Docker Service File:
 
 \`\`\`bash
+
 sudo nano /lib/systemd/system/docker.service
 Find the line that begins with ExecStart= and remove the part -H fd://
 Save.
 sudo systemctl daemon-reload
 sudo systemctl restart docker
+
 \`\`\`
 
 you can check the status by running :
 \`\`\`bash
+
 sudo systemctl status docker
+
 \`\`\`
 
 ## Open port 2375 for Inbound rule
@@ -550,7 +604,9 @@ Update the containers  section to include the DOCKER_HOST environment variable w
 ## Apply Updated Jenkins Configuration:
 
 \`\`\`bash
+
 kubectl apply -f jenkins-deployment.yaml
+
 \`\`\`
 
 ## Create a Jenkinsfile 
@@ -580,7 +636,9 @@ jenkins-cluster-role-binding.yaml
 ![jenkins-cluster-role-binding](Images/jenkins-cluster-role-binding.png)
 
 \`\`\`bash
+
 kubectl apply -f jenkins-cluster-role-binding.yaml
+
 \`\`\`
 
 ## jenkins-cluster-role.yaml
@@ -588,7 +646,9 @@ kubectl apply -f jenkins-cluster-role-binding.yaml
 ![jenkins-cluster-role.yaml](Images/jenkins-cluster-role.yaml.png)
 
 \`\`\`bash
+
 kubectl apply -f jenkins-cluster-role.yaml
+
 \`\`\`
 
 ## Now you can push the new Files to the repository and See the pipeline runs :
