@@ -3,11 +3,17 @@ Create a Kubernetes Cluster And Deploy Jenkins, Using Elastic Kubernetes Service
 EC2 Control Node Instance Type:
 t3.small
 AMI: Ubuntu.
+
 Security Group Settings:    
+
 Ports to Open:
+
 22 for SSH
+
 80 for HTTP
+
 443 for HTTPS
+
 ![ec2 instance(configure)](Images/ec2_instance(configure).png)
 ![ec2 instance(secGroup)](Images/ec2_instance(secGroup).png)
 
