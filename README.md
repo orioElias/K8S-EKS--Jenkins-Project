@@ -94,14 +94,19 @@ docker push <username>/<repo-name:<tag>
 Create a Jenkins persistent volume  YAML File
 change values : to your “node name”
 ![persistent volume YAML File](Images/persistent_volume_YAML_File.png)
+
 kubectl apply -f persistent-volume.yaml
 
 Create a Jenkins persistent volume claim  YAML File
+
 ![Jenkins persistent volume claim YAML File](Images/Jenkins_persistent_volume_claim_YAML_File.png)
+
 kubectl apply -f persistent-volume-claim.yaml
 
 Create a Jenkins persistent local-storage YAML File
+
 ![persistent local-storage YAML File](Images/persistent_local-storage_YAML_File.png)
+
 kubectl apply -f local-storage.yaml							
 
 Expose the Jenkins Service
