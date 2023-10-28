@@ -31,11 +31,13 @@ Ports to Open:
 ### SSH into EC2 Instance
 
 \`\`\`bash
+
 ssh -i "your-key.pem" ubuntu@<EC2_PUBLIC_IP>
 \`\`\`
 
 #### Change Host Name (Optional)
 \`\`\`bash
+
 sudo hostnamectl set-hostname k8s-master
 echo "127.0.0.1 k8s-master" | sudo tee -a /etc/hosts
 \`\`\`
@@ -46,22 +48,26 @@ echo "127.0.0.1 k8s-master" | sudo tee -a /etc/hosts
 
 #### Update Packages
 \`\`\`bash
+
 sudo apt-get update
 \`\`\`
 
 #### Install AWS CLI
 \`\`\`bash
+
 sudo apt install awscli -y
 \`\`\`
 
 #### Install python3-pip
 \`\`\`bash
+
 sudo apt install python3-pip
 pip install --upgrade awscli
 \`\`\`
 
 #### Configure AWS CLI
 \`\`\`bash
+
 aws configure
 \`\`\`
 
@@ -74,6 +80,7 @@ aws configure
 
 ### Install EKSCTL and Kubectl
 \`\`\`bash
+
 curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
 sudo mv /tmp/eksctl /usr/local/bin
 eksctl version
@@ -81,6 +88,7 @@ eksctl version
 
 #### Install Kubectl
 \`\`\`bash
+
 sudo apt-get update
 sudo apt-get install -y apt-transport-https
 sudo curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
@@ -93,6 +101,7 @@ sudo apt-get install -y kubectl
 
 ### Create an EKS Cluster
 \`\`\`bash
+
 eksctl create cluster \
 --name “cluster-name” \
 --region “your-region” \
@@ -108,6 +117,7 @@ eksctl create cluster \
 
 ### Confirm Cluster Creation and Setup
 \`\`\`bash
+
 eksctl get cluster --name ‘cluster-name --region “your region”
 kubectl version
 kubectl create namespace devops
@@ -128,6 +138,7 @@ kubectl create namespace devops
 ![Jenkins Deployment YAML File](Images/Jenkins_Deployment_YAML_File.png)
 
 \`\`\`bash
+
 kubectl apply -f persistent-volume.yaml
 kubectl apply -f persistent-volume-claim.yaml
 kubectl apply -f local-storage.yaml
@@ -135,6 +146,7 @@ kubectl apply -f local-storage.yaml
 
 #### Expose Jenkins Service
 \`\`\`bash
+
 kubectl apply -f jenkins-service.yaml
 \`\`\`
 
@@ -160,6 +172,7 @@ kubectl apply -f jenkins-service.yaml
 ### Final Steps
 ![See the pipeline runs](Images/See_the_pipeline_runs.png)
 \`\`\`bash
+
 kubectl apply -f jenkins-cluster-role-binding.yaml
 kubectl apply -f jenkins-cluster-role.yaml
 \`\`\`
