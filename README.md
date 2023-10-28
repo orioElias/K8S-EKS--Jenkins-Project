@@ -13,7 +13,7 @@
 ---
 
 ### EC2 Control Node Setup
-[Back to top](#table-of-contents)
+<a id="ec2-control-node-setup"></a>
 
 **Instance Type**: t3.small  
 **AMI**: Ubuntu.
@@ -30,31 +30,43 @@ Ports to Open:
 ---
 
 ### SSH into EC2 Instance
-[Back to top](#table-of-contents)
+<a id="ssh-into-ec2-instance"></a>
 
-`ssh -i "your-key.pem" ubuntu@<EC2_PUBLIC_IP>`
+\`\`\`
+ssh -i "your-key.pem" ubuntu@<EC2_PUBLIC_IP>
+\`\`\`
 
 #### Change Host Name (Optional)
-`sudo hostnamectl set-hostname k8s-master`
-`echo "127.0.0.1 k8s-master" | sudo tee -a /etc/hosts`
+\`\`\`
+sudo hostnamectl set-hostname k8s-master
+echo "127.0.0.1 k8s-master" | sudo tee -a /etc/hosts
+\`\`\`
 
 ---
 
 ### Install Necessary Tools
-[Back to top](#table-of-contents)
+<a id="install-necessary-tools"></a>
 
 #### Update Packages
-`sudo apt-get update`
+\`\`\`
+sudo apt-get update
+\`\`\`
 
 #### Install AWS CLI
-`sudo apt install awscli -y`
+\`\`\`
+sudo apt install awscli -y
+\`\`\`
 
 #### Install python3-pip
-`sudo apt install python3-pip`
-`pip install --upgrade awscli`
+\`\`\`
+sudo apt install python3-pip
+pip install --upgrade awscli
+\`\`\`
 
 #### Configure AWS CLI
-`aws configure`
+\`\`\`
+aws configure
+\`\`\`
 
 - AWS Access Key ID: Your AWS Access Key.
 - AWS Secret Access Key: Your AWS Secret Access Key.
@@ -64,25 +76,29 @@ Ports to Open:
 ---
 
 ### Create an EKS Cluster
-[Back to top](#table-of-contents)
+<a id="create-an-eks-cluster"></a>
 
-`eksctl create cluster --name “cluster-name” --region “your-region” --nodes 1 --nodegroup-name “group-name” --node-type “instance-type” --managed`
+\`\`\`
+eksctl create cluster --name “cluster-name” --region “your-region” --nodes 1 --nodegroup-name “group-name” --node-type “instance-type” --managed
+\`\`\`
 
 ![Cluster Creation](Images/Cluster_Creation.png)
 
 ---
 
 ### Confirm Cluster Creation and Setup
-[Back to top](#table-of-contents)
+<a id="confirm-cluster-creation-and-setup"></a>
 
-`eksctl get cluster --name ‘cluster-name --region “your region”`
-`kubectl version`
-`kubectl create namespace devops`
+\`\`\`
+eksctl get cluster --name ‘cluster-name --region “your region”
+kubectl version
+kubectl create namespace devops
+\`\`\`
 
 ---
 
 ### Allocating An Elastic IP
-[Back to top](#table-of-contents)
+<a id="allocating-an-elastic-ip"></a>
 ![Elastic ip(1)](Images/Elastic_ip(1).png)
 ![Elastic ip(2)](Images/Elastic_ip(2).png)
 ![Elastic ip(3)](Images/Elastic_ip(3).png)
@@ -91,23 +107,27 @@ Ports to Open:
 ---
 
 ### Configure Jenkins
-[Back to top](#table-of-contents)
+<a id="configure-jenkins"></a>
 ![Jenkins Dockerfile](Images/Jenkins_Dockerfile.png)
 ![Jenkins Deployment YAML File](Images/Jenkins_Deployment_YAML_File.png)
 
-`kubectl apply -f persistent-volume.yaml`
-`kubectl apply -f persistent-volume-claim.yaml`
-`kubectl apply -f local-storage.yaml`
+\`\`\`
+kubectl apply -f persistent-volume.yaml
+kubectl apply -f persistent-volume-claim.yaml
+kubectl apply -f local-storage.yaml
+\`\`\`
 
 #### Expose Jenkins Service
-`kubectl apply -f jenkins-service.yaml`
+\`\`\`
+kubectl apply -f jenkins-service.yaml
+\`\`\`
 
 ![Expose the Jenkins Service](Images/Expose_the_Jenkins_Service.png)
 
 ---
 
 ### Integrate with GitHub
-[Back to top](#table-of-contents)
+<a id="integrate-with-github"></a>
 ![Create GitHub Account](Images/Create_GitHub_Account.png)
 ![Create a GitHub Repository (1)](Images/Create_a_GitHub_Repository_(1).png)
 
@@ -118,15 +138,16 @@ Ports to Open:
 ---
 
 ### Docker Configuration
-[Back to top](#table-of-contents)
+<a id="docker-configuration"></a>
 ![Creating Docker Hub credentials](Images/Creating_Docker_Hub_credentials.png)
 
 ---
 
 ### Final Steps
-[Back to top](#table-of-contents)
+<a id="final-steps"></a>
 ![See the pipeline runs](Images/See_the_pipeline_runs.png)
 
-`kubectl apply -f jenkins-cluster-role-binding.yaml`
-`kubectl apply -f jenkins-cluster-role.yaml`
-
+\`\`\`
+kubectl apply -f jenkins-cluster-role-binding.yaml
+kubectl apply -f jenkins-cluster-role.yaml
+\`\`\`
