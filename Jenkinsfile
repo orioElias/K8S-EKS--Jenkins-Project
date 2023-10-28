@@ -36,7 +36,8 @@ pipeline {
                     if ! kubectl get namespaces | grep -q 'web-app'; then
                         kubectl create namespace web-app
                     fi
-                    kubectl apply -f K8S/PipelineFiles/ --namespace=web-app
+                    kubectl delete -f K8S/ --namespace=web-app
+                    kubectl apply -f K8S/PipelineFiles --namespace=web-app
                 '''
             }
         }
