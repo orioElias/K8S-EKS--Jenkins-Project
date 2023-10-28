@@ -33,6 +33,7 @@ Ports to Open:
 \`\`\`bash
 
 ssh -i "your-key.pem" ubuntu@<EC2_PUBLIC_IP>
+
 \`\`\`
 
 #### Change Host Name (Optional)
@@ -40,6 +41,7 @@ ssh -i "your-key.pem" ubuntu@<EC2_PUBLIC_IP>
 
 sudo hostnamectl set-hostname k8s-master
 echo "127.0.0.1 k8s-master" | sudo tee -a /etc/hosts
+
 \`\`\`
 
 ---
@@ -50,12 +52,14 @@ echo "127.0.0.1 k8s-master" | sudo tee -a /etc/hosts
 \`\`\`bash
 
 sudo apt-get update
+
 \`\`\`
 
 #### Install AWS CLI
 \`\`\`bash
 
 sudo apt install awscli -y
+
 \`\`\`
 
 #### Install python3-pip
@@ -63,12 +67,14 @@ sudo apt install awscli -y
 
 sudo apt install python3-pip
 pip install --upgrade awscli
+
 \`\`\`
 
 #### Configure AWS CLI
 \`\`\`bash
 
 aws configure
+
 \`\`\`
 
 - AWS Access Key ID: Your AWS Access Key.
@@ -84,6 +90,7 @@ aws configure
 curl --silent --location "https://github.com/weaveworks/eksctl/releases/latest/download/eksctl_$(uname -s)_amd64.tar.gz" | tar xz -C /tmp
 sudo mv /tmp/eksctl /usr/local/bin
 eksctl version
+
 \`\`\`
 
 #### Install Kubectl
@@ -95,6 +102,7 @@ sudo curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt
 echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee -a /etc/apt/sources.list.d/kubernetes.list
 sudo apt-get update
 sudo apt-get install -y kubectl
+
 \`\`\`
 
 ---
@@ -109,6 +117,7 @@ eksctl create cluster \
 --nodegroup-name “group-name” \
 --node-type “instance-type” \
 --managed
+
 \`\`\`
 
 ![Cluster Creation](Images/Cluster_Creation.png)
@@ -121,6 +130,7 @@ eksctl create cluster \
 eksctl get cluster --name ‘cluster-name --region “your region”
 kubectl version
 kubectl create namespace devops
+
 \`\`\`
 
 ---
@@ -142,12 +152,14 @@ kubectl create namespace devops
 kubectl apply -f persistent-volume.yaml
 kubectl apply -f persistent-volume-claim.yaml
 kubectl apply -f local-storage.yaml
+
 \`\`\`
 
 #### Expose Jenkins Service
 \`\`\`bash
 
 kubectl apply -f jenkins-service.yaml
+
 \`\`\`
 
 ![Expose the Jenkins Service](Images/Expose_the_Jenkins_Service.png)
@@ -175,5 +187,6 @@ kubectl apply -f jenkins-service.yaml
 
 kubectl apply -f jenkins-cluster-role-binding.yaml
 kubectl apply -f jenkins-cluster-role.yaml
+
 \`\`\`
 
