@@ -232,7 +232,7 @@ Copy the generated token somewhere safe; you won't be able to see it again.
 (its cut for safety reasons)
 
 
-![Create Personal Access Token (PAT) on GitHub:(5)](Images/Images/Create_Personal_Access_Token_(PAT)_on_GitHub:(5).png)
+![Create Personal Access Token (PAT) on GitHub:(5)](Images/Create_Personal_Access_Token_(PAT)_on_GitHub:(5).png)
 
 Add GitHub Configuration In Jenkins :
 Open Jenkins in your browser, then navigate to "Manage Jenkins" -> " System."
