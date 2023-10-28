@@ -33,13 +33,17 @@ Ports to Open:
 <a id="ssh-into-ec2-instance"></a>
 
 \`\`\`
+
 ssh -i "your-key.pem" ubuntu@<EC2_PUBLIC_IP>
+
 \`\`\`
 
 #### Change Host Name (Optional)
 \`\`\`
+
 sudo hostnamectl set-hostname k8s-master
 echo "127.0.0.1 k8s-master" | sudo tee -a /etc/hosts
+
 \`\`\`
 
 ---
@@ -49,23 +53,31 @@ echo "127.0.0.1 k8s-master" | sudo tee -a /etc/hosts
 
 #### Update Packages
 \`\`\`
+
 sudo apt-get update
+
 \`\`\`
 
 #### Install AWS CLI
 \`\`\`
+
 sudo apt install awscli -y
+
 \`\`\`
 
 #### Install python3-pip
 \`\`\`
+
 sudo apt install python3-pip
 pip install --upgrade awscli
+
 \`\`\`
 
 #### Configure AWS CLI
 \`\`\`
+
 aws configure
+
 \`\`\`
 
 - AWS Access Key ID: Your AWS Access Key.
@@ -79,7 +91,9 @@ aws configure
 <a id="create-an-eks-cluster"></a>
 
 \`\`\`
+
 eksctl create cluster --name “cluster-name” --region “your-region” --nodes 1 --nodegroup-name “group-name” --node-type “instance-type” --managed
+
 \`\`\`
 
 ![Cluster Creation](Images/Cluster_Creation.png)
@@ -90,9 +104,11 @@ eksctl create cluster --name “cluster-name” --region “your-region” --nod
 <a id="confirm-cluster-creation-and-setup"></a>
 
 \`\`\`
+
 eksctl get cluster --name ‘cluster-name --region “your region”
 kubectl version
 kubectl create namespace devops
+
 \`\`\`
 
 ---
@@ -112,14 +128,18 @@ kubectl create namespace devops
 ![Jenkins Deployment YAML File](Images/Jenkins_Deployment_YAML_File.png)
 
 \`\`\`
+
 kubectl apply -f persistent-volume.yaml
 kubectl apply -f persistent-volume-claim.yaml
 kubectl apply -f local-storage.yaml
+
 \`\`\`
 
 #### Expose Jenkins Service
 \`\`\`
+
 kubectl apply -f jenkins-service.yaml
+
 \`\`\`
 
 ![Expose the Jenkins Service](Images/Expose_the_Jenkins_Service.png)
@@ -148,6 +168,8 @@ kubectl apply -f jenkins-service.yaml
 ![See the pipeline runs](Images/See_the_pipeline_runs.png)
 
 \`\`\`
+
 kubectl apply -f jenkins-cluster-role-binding.yaml
 kubectl apply -f jenkins-cluster-role.yaml
+
 \`\`\`
