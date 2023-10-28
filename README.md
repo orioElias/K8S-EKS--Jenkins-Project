@@ -12,7 +12,7 @@
 9. [Deployment Configuration](#deployment-configuration)
 10. [Roles and Pipeline Run](#roles-and-pipeline-run)
 
-
+<a name="ec2-control-node-and-ssh"></a>
 ## EC2 Control Node
 
 **Instance Type**: t3.small  
@@ -61,7 +61,7 @@ sudo apt-get update
 \`\`\`
 
 ---
-
+<a name="aws-cli-and-eksctl-installation"></a>
 ## Install AWS CLI
 
 \`\`\`bash
@@ -131,6 +131,7 @@ sudo apt-get install -y kubectl
 
 ---
 
+<a name="eks-cluster-creation"></a>
 ## Create an EKS Cluster
 
 \`\`\`bash
@@ -197,6 +198,7 @@ Choose the New IP, Actions, Associate elastic ip address ->Choose “Network Int
 
 ---
 
+<a name="jenkins-setup"></a>
 ## Create a Jenkins Dockerfile With necessary installations
 
 ![Jenkins Dockerfile](Images/Jenkins_Dockerfile.png)
@@ -219,6 +221,7 @@ docker push <username>/<repo-name:<tag>
 
 ---
 
+<a name="persistent-volumes-and-services"></a>
 ## Create a Jenkins persistent volume  YAML File
 
 Change values : to your “node name”
@@ -362,7 +365,7 @@ enter the public ip here http://”public-ip”:30000/
 
 ![Jenkins Ready](Images/Jenkins_Ready.png)
 
-
+<a name="github-and-jenkins-integration"></a>
 ## Configure jenkins to work with GitHub :
 
 Create GitHub Account
@@ -470,6 +473,7 @@ From: “*/master” To  “*/main” And Click “SAVE”
 
 ![Connect the New GitHub Repository To Jenkins:(4)](Images/Connect_the_New_GitHub_Repository_To_Jenkins:(4).png)
 
+<a name="webhook-and-port-configurations"></a>
 ## Add GitHub Webhook to Trigger Jenkins Pipeline
 
 GitHub Repository Settings: Navigate to "Settings" on your GitHub repository.
@@ -534,6 +538,7 @@ After you push the commit, your GitHub webhook should trigger your Jenkins pipel
 
 Download from Official Samples: Microsoft offers various sample projects that you can download directly. You can find these on the official ASP.NET Core samples page.
 
+<a name="docker-setup"></a>
 ## Creating Docker Hub credentials
 
 Create a Docker Access Token:
@@ -614,6 +619,7 @@ Update the containers  section to include the DOCKER_HOST environment variable w
 
 ![Update Jenkins Deployment Configuration:](Images/Update_Jenkins_Deployment_Configuration:.png)
 
+<a name="deployment-configuration"></a>
 ## Apply Updated Jenkins Configuration:
 
 \`\`\`bash
@@ -642,6 +648,7 @@ kubectl apply -f jenkins-deployment.yaml
 
 Open port 30080 also in the security group
 
+<a name="roles-and-pipeline-run"></a>
 ## Create Cluster Role Files
 
 jenkins-cluster-role-binding.yaml
