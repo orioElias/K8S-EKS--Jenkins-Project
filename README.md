@@ -183,6 +183,7 @@ kubectl apply -f jenkins-service.yaml
 
 ### Final Steps
 ![See the pipeline runs](Images/See_the_pipeline_runs.png)
+
 \`\`\`bash
 
 kubectl apply -f jenkins-cluster-role-binding.yaml
